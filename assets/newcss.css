@@ -612,6 +612,21 @@ img {
 .qualification__button.qualification__active {
   color: var(--first-color);
 }
+.skills__bar {
+  background-color: #ddd;
+  border-radius: 8px;
+  height: 8px;
+  margin-top: 4px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.skills__bar span {
+  display: block;
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 8px;
+}
 
 /*================= Services ==================*/
 
