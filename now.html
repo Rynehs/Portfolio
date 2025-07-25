@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects In Progress - Henry Mburia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/newcss.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <style>
+        /* Add any specific styles for now.html here if needed */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Assuming Inter is used in main site or fallback */
+            background-color: var(--body-color);
+            /* Use CSS variables from newcss.css if available */
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 968px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1.5rem;
+        }
+
+        .section__title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+        }
+
+        .project-list {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .project-card {
+            background-color: var(--container-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            /* Assuming shadow variable from newcss.css */
+            text-align: center;
+        }
+
+        .project-card h3 {
+            font-size: var(--h3-font-size);
+            margin-bottom: 0.5rem;
+            color: var(--title-color);
+        }
+
+        .project-card p {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .project-card .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .back-button {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: var(--normal-font-size);
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main">
+        <section class="section">
+            <h2 class="section__title">Projects In Progress</h2>
+            <div class="container project-list">
+                <div class="project-card">
+                    <h3>Homelab Ubuntu Server 🏗️</h3>
+                    <p>
+                        A self-hosted homelab project focused on building a secure and scalable local server
+                        environment.
+                        This includes setting up core services and implementing secure remote access.
+                    </p>
+                    <a href="ubnt.html" class="button button--flex button--small">
+                        View Details
+                        <i class="uil uil-arrow-right button__icon"></i>
+                    </a>
+                </div>
+
+                
+
+            </div>
+            <div class="back-button container">
+                <a href="index.html#portfolio" class="button button--flex button--small button--link">
+                    <i class="uil uil-arrow-left button__icon"></i> Back to All Projects
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
