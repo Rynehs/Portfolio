@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="assets/newcss.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
     <style>
-        /* Add any specific styles for now.html here if needed */
+        /* Specific styles for now.html */
         body {
-            font-family: 'Inter', sans-serif;
-            /* Assuming Inter is used in main site or fallback */
+            font-family: var(--body-font); /* Using CSS variable from newcss.css */
             background-color: var(--body-color);
-            /* Use CSS variables from newcss.css if available */
             color: var(--text-color);
             line-height: 1.6;
         }
@@ -44,7 +42,6 @@
             border-radius: 0.75rem;
             padding: 2rem;
             box-shadow: var(--shadow);
-            /* Assuming shadow variable from newcss.css */
             text-align: center;
         }
 
@@ -61,9 +58,6 @@
         }
 
         .project-card .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
             margin-top: 1rem;
         }
 
@@ -82,7 +76,7 @@
             <h2 class="section__title">Projects In Progress</h2>
             <div class="container project-list">
                 <div class="project-card">
-                    <h3>Homelab Ubuntu Server 🏗️</h3>
+                    <h3><i class="uil uil-server project-card__icon"></i> Homelab Ubuntu Server</h3>
                     <p>
                         A self-hosted homelab project focused on building a secure and scalable local server
                         environment.
@@ -93,9 +87,6 @@
                         <i class="uil uil-arrow-right button__icon"></i>
                     </a>
                 </div>
-
-                
-
             </div>
             <div class="back-button container">
                 <a href="index.html#portfolio" class="button button--flex button--small button--link">

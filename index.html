@@ -17,7 +17,7 @@
 <body oncontextmenu="return false">
   <header class="header" id="header">
     <nav class="nav container">
-      <a href="#" class="nav__logo">Henry Mburia</a>
+      <a href="" class="nav__logo" id="nav-logo-trigger">Henry Mburia</a>
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list grid">
           <li class="nav__item">
@@ -806,13 +806,16 @@
 
         <ul class="footer__links">
           <li>
-            <a href="#qualification" class="footer__link">Qualification</a>
+            <a href="#qualification" class="footer__link">Qualification📃</a>
           </li>
           <li>
             <a href="#portfolio" class="footer__link">Portfolio</a>
           </li>
           <li>
             <a href="#contact" class="footer__link">Contact-Me</a>
+          </li>
+          <li>
+            <a href="now.html" class="footer__link">What's He Doing overthere👀?</a>
           </li>
         </ul>
 
@@ -827,7 +830,7 @@
         </div>
       </div>
 
-      <p class="footer__copy">&#169; Hendry. All right reserved</p>
+      <p class="footer__copy">&#169; Henry. All right reserved</p>
     </div>
   </footer>
 
@@ -838,6 +841,98 @@
   <script src="https://cdn.lordicon.com/lordicon.js"></script>
   <script type="text/javascript" src="assets/swiper-bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/2205d59d52.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const logoTrigger = document.getElementById('nav-logo-trigger');
+      let clickCount = 0;
+      let lastClickTime = 0;
+      const requiredClicks = 5; // Number of clicks to activate
+      const timeWindow = 5000; // Time in ms 
+
+      if (logoTrigger) {
+        logoTrigger.addEventListener('click', (event) => {
+          event.preventDefault(); // Prevent default link behavior
+
+          const currentTime = new Date().getTime();
+
+          if (currentTime - lastClickTime < timeWindow) {
+            clickCount++;
+          } else {
+            clickCount = 1; // Reset if clicks are too far apart
+          }
+
+          lastClickTime = currentTime;
+
+          if (clickCount === requiredClicks) {
+            window.location.href = 'game.html'; // Redirect to the game
+            clickCount = 0; // Reset count
+          }
+          // Optional: Add a subtle visual cue for clicks (e.g., a tiny shake, temporary color change)
+          // For now, keeping it completely hidden.
+        });
+      }
+
+      // Existing fetch for content.json - ensure this runs after the trigger setup
+      fetch('content.json')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('nav-logo-trigger').textContent = data.header.logo; // Update the logo text
+          const navList = document.getElementById('nav-list');
+          navList.innerHTML = '';
+          data.header.menu.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'nav__item';
+            li.innerHTML = `
+              <a href="${item.link}" class="nav__link">
+                <i class="${item.icon} nav__icon"></i>${item.text}
+              </a>
+            `;
+            navList.appendChild(li);
+          });
+
+          // Set active link based on current hash, if any
+          const currentHash = window.location.hash;
+          if (currentHash) {
+            document.querySelectorAll('.nav__link').forEach(link => {
+              if (link.getAttribute('href') === currentHash) {
+                link.classList.add('active-link');
+              } else {
+                link.classList.remove('active-link');
+              }
+            });
+          } else {
+            // Default to home if no hash
+            document.querySelector('.nav__link[href="#home"]').classList.add('active-link');
+          }
+
+          // Initial theme application
+          const themeButton = document.getElementById('theme-button');
+          const darkTheme = 'dark-theme';
+          const iconTheme = 'uil-sun';
+
+          const selectedTheme = localStorage.getItem('selected-theme');
+          const selectedIcon = localStorage.getItem('selected-icon');
+
+          const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light';
+          const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'uil-moon' : 'uil-sun';
+
+          if (selectedTheme) {
+            document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme);
+            themeButton.classList[selectedIcon === 'uil-moon' ? 'add' : 'remove'](iconTheme);
+          }
+
+          themeButton.addEventListener('click', () => {
+            document.body.classList.toggle(darkTheme);
+            themeButton.classList.toggle(iconTheme);
+            localStorage.setItem('selected-theme', getCurrentTheme());
+            localStorage.setItem('selected-icon', getCurrentIcon());
+          });
+
+        })
+        .catch(error => console.error('Error fetching content.json:', error));
+    });
+  </script>
+  
   <script src="assets/ptj.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {

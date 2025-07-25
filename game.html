@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Guessing Game - Henry Mburia</title>
+    <link rel="stylesheet" href="assets/newcss.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+    <style>
+        /* Existing CSS (from your file) */
+        body {
+            font-family: var(--body-font);
+            background-color: var(--body-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease;
+            /* For background transitions */
+        }
+
+        .game-container {
+            background-color: var(--container-color);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .game-title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .game-icon {
+            font-size: 5rem;
+            /* Larger icon */
+            color: var(--first-color);
+            /* Primary color for icon */
+            margin-bottom: 2rem;
+            display: inline-block;
+            /* Essential for transforms */
+            /* Add animation properties here */
+        }
+
+        .game-input {
+            width: 80%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: var(--normal-font-size);
+            background-color: var(--input-color);
+            color: var(--text-color);
+            outline: none;
+            text-align: center;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            /* For focus */
+        }
+
+        .game-input:focus {
+            border-color: var(--first-color);
+            box-shadow: 0 0 0 2px rgba(var(--first-color-rgb), 0.2);
+        }
+
+        .game-button {
+            display: inline-block;
+            background-color: var(--first-color);
+            color: var(--container-color);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: var(--normal-font-size);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: var(--font-medium);
+            text-decoration: none;
+            margin: 0.5rem;
+            /* Added for multiple buttons */
+        }
+
+        .game-button:hover {
+            background-color: var(--first-color-alt);
+        }
+
+        .game-feedback {
+            margin-top: 1rem;
+            font-weight: var(--font-medium);
+            font-size: var(--normal-font-size);
+        }
+
+        .game-feedback.correct {
+            color: var(--first-color);
+            /* Use first-color for success */
+        }
+
+        .game-feedback.incorrect {
+            color: hsl(0, 70%, 50%);
+            /* A red color for incorrect */
+        }
+
+        .game-score,
+        .game-timer {
+            font-size: var(--h3-font-size);
+            color: var(--title-color);
+            margin-bottom: 1rem;
+        }
+
+        .game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(var(--body-color-rgb), 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .game-overlay-content {
+            background-color: var(--container-color);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            max-width: 400px;
+        }
+
+        .game-overlay-content h3 {
+            font-size: var(--h2-font-size);
+            margin-bottom: 1.5rem;
+            color: var(--title-color);
+        }
+
+        .game-overlay-content p {
+            font-size: var(--normal-font-size);
+            margin-bottom: 1.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            font-size: var(--small-font-size);
+            color: var(--text-color-light);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- NEW CSS FOR PLAYFUL FEATURES --- */
+
+        /* Animations */
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .game-icon.fade-in {
+            animation: fade-in 0.4s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+                color: gold;
+            }
+
+            /* A bright color for sparkle */
+        }
+
+        .game-icon.sparkle {
+            animation: sparkle 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+        }
+
+        .game-input.shake {
+            animation: shake 0.3s ease-in-out;
+            border-color: hsl(0, 70%, 50%);
+        }
+
+        @keyframes flash-red {
+
+            0%,
+            100% {
+                box-shadow: none;
+            }
+
+            50% {
+                box-shadow: 0 0 10px 5px hsl(0, 70%, 50%);
+            }
+        }
+
+        .game-icon.flash-red {
+            animation: flash-red 0.3s ease-in-out;
+        }
+
+        /* Difficulty selection */
+        .difficulty-options {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .difficulty-options label {
+            margin-right: 1rem;
+            font-weight: var(--font-medium);
+            cursor: pointer;
+        }
+
+        .difficulty-options input[type="radio"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Dynamic background colors (example variables - define in newcss.css if preferred) */
+        :root {
+            --body-color-easy: hsl(140, 50%, 95%);
+            /* Light green */
+            --body-color-medium: hsl(40, 50%, 95%);
+            /* Light yellow */
+            --body-color-hard: hsl(10, 50%, 95%);
+            /* Light red/orange */
+
+            /* Ensure your default body-color is also defined in newcss.css */
+            /* For demonstration, I'll put it here. */
+            --body-color: hsl(200, 100%, 98%);
+            /* Default light blue */
+            --body-color-rgb: 245, 250, 255;
+            /* RGB for default body-color */
+
+            /* Add other color variables from your newcss.css here if not already linked */
+            --first-color: hsl(250, 69%, 61%);
+            --first-color-alt: hsl(250, 69%, 55%);
+            --title-color: hsl(250, 8%, 15%);
+            --text-color: hsl(250, 8%, 45%);
+            --text-color-light: hsl(250, 8%, 65%);
+            --container-color: #fff;
+            --body-color: #f7f6fb;
+            --input-color: hsl(250, 24%, 96%);
+            --border-color: hsl(250, 24%, 90%);
+            --shadow: 0 8px 24px rgba(3, 0, 71, 0.1);
+
+            /* Font and typography variables */
+            --body-font: 'Poppins', sans-serif;
+            --h2-font-size: 1.5rem;
+            --h3-font-size: 1.25rem;
+            --normal-font-size: 1rem;
+            --small-font-size: 0.813rem;
+            --font-medium: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container" id="game-start-screen">
+        <h2 class="game-title">Guess The Icon!</h2>
+        <p>Test your knowledge of Unicons. How many can you guess in 60 seconds?</p>
+
+        <div class="difficulty-options">
+            <p>Select Difficulty:</p>
+            <input type="radio" id="difficultyEasy" name="difficulty" value="easy" checked>
+            <label for="difficultyEasy">Easy</label>
+            <input type="radio" id="difficultyMedium" name="difficulty" value="medium">
+            <label for="difficultyMedium">Medium</label>
+            <input type="radio" id="difficultyHard" name="difficulty" value="hard">
+            <label for="difficultyHard">Hard</label>
+        </div>
+
+        <button class="game-button" id="startGameButton">Start Game</button>
+    </div>
+
+    <div class="game-container hidden" id="game-play-screen">
+        <h2 class="game-title">What is this icon?</h2>
+        <i class="game-icon" id="gameIcon"></i>
+        <input type="text" id="iconGuess" class="game-input" placeholder="Type your guess...">
+        <div class="game-feedback" id="feedback"></div>
+        <button class="game-button" id="skipButton">Skip (-2 points)</button>
+        <div class="game-score">Score: <span id="score">0</span></div>
+        <div class="game-timer">Time Left: <span id="timer">60</span>s</div>
+        <button class="game-button" id="exitGameButton">Exit Game</button>
+    </div>
+
+    <div class="game-overlay hidden" id="gameOverOverlay">
+        <div class="game-overlay-content">
+            <h3>Game Over!</h3>
+            <p>You guessed <span id="finalScore">0</span> icons correctly!</p>
+            <button class="game-button" id="playAgainButton">Play Again</button>
+            <a href="index.html" class="game-button back-link-btn">Back to Portfolio</a>
+        </div>
+
+    </div>
+
+    <script>
+        const allIcons = [
+            { name: "home", class: "uil uil-estate" },
+            { name: "user", class: "uil uil-user" },
+            { name: "file", class: "uil uil-file-alt" },
+            { name: "briefcase", class: "uil uil-briefcase-alt" },
+            { name: "message", class: "uil uil-message" },
+            { name: "arrow right", class: "uil uil-arrow-right" },
+            { name: "linkedin", class: "uil uil-linkedin-alt" },
+            { name: "dribbble", class: "uil uil-dribbble" },
+            { name: "github", class: "uil uil-github-alt" },
+            { name: "setting", class: "uil uil-setting" },
+            { name: "palette", class: "uil uil-palette" },
+            { name: "server", class: "uil uil-server" },
+            { name: "cloud", class: "uil uil-cloud" },
+            { name: "code", class: "uil uil-brackets-curly" },
+            { name: "graduation cap", class: "uil uil-graduation-cap" },
+            { name: "calendar", class: "uil uil-calendar-alt" },
+            { name: "arrow down", class: "uil uil-arrow-down" },
+            { name: "phone", class: "uil uil-phone" },
+            { name: "envelope", class: "uil uil-envelope" },
+            { name: "location", class: "uil uil-map-marker" },
+            { name: "send", class: "uil uil-message" },
+            { name: "check", class: "uil uil-check-circle" },
+            { name: "times", class: "uil uil-times-circle" },
+            { name: "lightbulb", class: "uil uil-lightbulb" },
+            { name: "trophy", class: "uil uil-trophy" },
+            { name: "arrow up", class: "uil uil-arrow-up" },
+            { name: "mouse", class: "uil uil-mouse-alt" },
+            { name: "external link", class: "uil uil-external-link-alt" },
+            { name: "download", class: "uil uil-download-alt" },
+            { name: "analytics", class: "uil uil-chart-line" },
+            { name: "rocket", class: "uil uil-rocket" },
+            { name: "pen", class: "uil uil-pen" },
+            { name: "processor", class: "uil uil-processor" },
+            { name: "bug", class: "uil uil-bug" },
+            { name: "search", class: "uil uil-search" },
+            { name: "camera", class: "uil uil-camera" },
+            { name: "robot", class: "uil uil-robot" },
+            { name: "bug", class: "uil uil-bug" },
+            { name: "chart pie", class: "uil uil-chart-pie" },
+            { name: "bag", class: "uil uil-bag" },
+            { name: "coffee", class: "uil uil-coffee" },
+            { name: "desktop", class: "uil uil-desktop" },
+            { name: "monitor", class: "uil uil-monitor" },
+            { name: "headphones", class: "uil uil-headphones-alt" },
+            { name: "wifi", class: "uil uil-wifi" },
+            { name: "shield", class: "uil uil-shield-check" },
+            { name: "key", class: "uil uil-key-skeleton-alt" },
+            { name: "lock", class: "uil uil-lock-alt" },
+            { name: "unlock", class: "uil uil-unlock-alt" }
+        ];
+
+        // Define icons for different difficulties
+        const easyIcons = allIcons.filter(icon =>
+            ["home", "user", "file", "message", "arrow right", "linkedin", "github", "setting", "cloud", "code", "calendar", "phone", "envelope", "search"].includes(icon.name)
+        );
+
+        const mediumIcons = allIcons.filter(icon =>
+            easyIcons.map(e => e.name).includes(icon.name) ||
+            ["briefcase", "dribbble", "palette", "server", "graduation cap", "arrow down", "location", "check", "times", "lightbulb", "trophy", "arrow up", "mouse", "download"].includes(icon.name)
+        );
+        // Hard icons will be allIcons or a subset that excludes the very easy ones, depending on desired difficulty curve
+        const hardIcons = allIcons; // For now, all icons are hard
+
+        const correctPhrases = [
+            "Excellent!", "Nailed it!", "Spot on!", "You got it!", "Fantastic!", "Perfect!"
+        ];
+
+        const incorrectPhrases = [
+            "Oops, not quite!", "Try again!", "Close, but no cigar!", "Not that one!", "Think harder!", "Almost!"
+        ];
+
+        let currentIcon = null;
+        let score = 0;
+        let timeLeft = 0; // Initialized to 0, set by difficulty
+        let timerInterval;
+        let gameIcons = []; // Stores the icons for the current game based on difficulty
+
+        // Audio Objects
+        const correctSound = new Audio('assets/sounds/correct.wav');
+        correctSound.volume = 0.5;
+        const incorrectSound = new Audio('assets/sounds/incorrect.wav');
+        incorrectSound.volume = 0.5;
+        const gameStartSound = new Audio('assets/sounds/gamestart.wav');
+        gameStartSound.volume = 0.6;
+        const gameOverSound = new Audio('assets/sounds/game_end.wav');
+        gameOverSound.volume = 0.6;
+
+        const startGameButton = document.getElementById('startGameButton');
+        const gameStartScreen = document.getElementById('game-start-screen');
+        const gamePlayScreen = document.getElementById('game-play-screen');
+        const gameOverOverlay = document.getElementById('gameOverOverlay');
+        const playAgainButton = document.getElementById('playAgainButton');
+        const skipButton = document.getElementById('skipButton'); // New skip button
+
+        const gameIcon = document.getElementById('gameIcon');
+        const iconGuessInput = document.getElementById('iconGuess');
+        const feedbackElement = document.getElementById('feedback');
+        const scoreElement = document.getElementById('score');
+        const timerElement = document.getElementById('timer');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        const difficultyRadios = document.querySelectorAll('input[name="difficulty"]');
+
+        startGameButton.addEventListener('click', startGame);
+        playAgainButton.addEventListener('click', startGame);
+        iconGuessInput.addEventListener('keydown', handleGuess);
+        skipButton.addEventListener('click', skipIcon); // Event listener for skip button
+
+        function setDifficulty(difficulty) {
+            switch (difficulty) {
+                case 'easy':
+                    gameIcons = easyIcons;
+                    timeLeft = 90; // Longer time for easy
+                    document.body.style.backgroundColor = 'var(--body-color-easy)';
+                    break;
+                case 'medium':
+                    gameIcons = mediumIcons;
+                    timeLeft = 60; // Standard time
+                    document.body.style.backgroundColor = 'var(--body-color-medium)';
+                    break;
+                case 'hard':
+                    gameIcons = hardIcons;
+                    timeLeft = 45; // Shorter time for hard
+                    document.body.style.backgroundColor = 'var(--body-color-hard)';
+                    break;
+                default:
+                    gameIcons = mediumIcons; // Default to medium
+                    timeLeft = 60;
+                    document.body.style.backgroundColor = 'var(--body-color-medium)';
+            }
+        }
+
+        function startGame() {
+            score = 0;
+            const selectedDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
+            setDifficulty(selectedDifficulty); // Set icons and time based on difficulty
+
+            updateScore();
+            updateTimer();
+            feedbackElement.textContent = '';
+            iconGuessInput.value = '';
+
+            gameStartScreen.classList.add('hidden');
+            gameOverOverlay.classList.add('hidden');
+            gamePlayScreen.classList.remove('hidden');
+            iconGuessInput.focus();
+
+            gameStartSound.play(); // Play game start sound
+            nextIcon();
+            startTimer();
+        }
+
+        function nextIcon() {
+            // Remove previous animations
+            gameIcon.classList.remove('sparkle', 'flash-red', 'fade-in');
+            iconGuessInput.classList.remove('shake');
+
+            const randomIndex = Math.floor(Math.random() * gameIcons.length);
+            currentIcon = gameIcons[randomIndex];
+            gameIcon.className = currentIcon.class + " game-icon"; // Ensure base class is also applied
+
+            // Add fade-in animation to the new icon
+            requestAnimationFrame(() => { // Use rAF to ensure class removal takes effect before re-adding
+                gameIcon.classList.add('fade-in');
+            });
+
+
+            iconGuessInput.value = '';
+            feedbackElement.textContent = '';
+        }
+
+        function handleGuess(event) {
+            if (event.key === 'Enter') {
+                const guess = iconGuessInput.value.trim().toLowerCase();
+                gameIcon.classList.remove('sparkle', 'flash-red'); // Clear previous icon animations
+                iconGuessInput.classList.remove('shake'); // Clear previous input animation
+
+                if (guess === currentIcon.name) {
+                    score++;
+                    feedbackElement.textContent = getRandomPhrase(correctPhrases);
+                    feedbackElement.className = 'game-feedback correct';
+                    gameIcon.classList.add('sparkle'); // Correct animation
+                    correctSound.play(); // Play correct sound
+                    updateScore();
+                    setTimeout(nextIcon, 800); // Show feedback briefly then move to next
+                } else {
+                    feedbackElement.textContent = `${getRandomPhrase(incorrectPhrases)} It was "${currentIcon.name}".`;
+                    feedbackElement.className = 'game-feedback incorrect';
+                    iconGuessInput.classList.add('shake'); // Shake input field
+                    gameIcon.classList.add('flash-red'); // Flash icon red
+                    incorrectSound.play(); // Play incorrect sound
+                    setTimeout(nextIcon, 1500); // Show feedback longer for incorrect
+                }
+            }
+        }
+
+        function skipIcon() {
+            score = Math.max(0, score - 2); // Deduct 2 points, ensure score doesn't go below 0
+            updateScore();
+            feedbackElement.textContent = `Skipped! It was "${currentIcon.name}". -2 points.`;
+            feedbackElement.className = 'game-feedback incorrect';
+            incorrectSound.play(); // Play an "incorrect" sound for skipping too
+            setTimeout(nextIcon, 1000); // Move to next icon after a short delay
+        }
+
+
+        function updateScore() {
+            scoreElement.textContent = score;
+        }
+
+        function updateTimer() {
+            timerElement.textContent = timeLeft;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            gamePlayScreen.classList.add('hidden');
+            gameOverOverlay.classList.remove('hidden');
+            finalScoreElement.textContent = score;
+            gameOverSound.play(); // Play game over sound
+            // Reset background color to default after game over
+            document.body.style.backgroundColor = 'var(--body-color)';
+        }
+
+        function getRandomPhrase(phrases) {
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+            return phrases[randomIndex];
+        }
+
+        // Add this to make the "Back to Portfolio" button work
+        document.querySelector('.back-link-btn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        // Initialize difficulty on page load
+        setDifficulty(document.querySelector('input[name="difficulty"]:checked').value);
+        // Get the new button element
+        const exitGameButton = document.getElementById('exitGameButton');
+
+        // Add event listener to the exit button
+        exitGameButton.addEventListener('click', () => {
+            clearInterval(timerInterval); // Stop the game timer
+            // Optionally, you could reset game state variables here if needed
+            // before navigating away, but clearInterval is the most important.
+
+            // Navigate back to the portfolio page
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+
+</html>
