@@ -116,9 +116,15 @@
                                 <span class="font-bold text-teal-700">Ubuntu 24.04 Server</span>
                                 <p class="text-sm text-gray-500">Static IP: 192.168.*.***</p>
                                 <div class="mt-4 space-y-2 text-left p-2 bg-gray-100 rounded">
-                                    <p>├── 🎞️ Jellyfin Media Server</p>
+                                    <p>├──  ☁ CasaOS for UI</p>
+                                    <p>├── 🐳 Docker for Containerization</p>
+                                    <p>├── 🦙 Ollama local model (tiny llama)</p>
                                     <p>├── 🔁 n8n Automation Tool</p>
+                                    <p>├── 🌐 Cloudflare Tunnel (Public Access)</p>
+                                    <p>├── 🎞️ Jellyfin Media Server</p>
+                                    <p>├── 🐳 Docker Compose for Services</p>
                                     <p>└── 🔒 Tailscale VPN (Admin Access)</p>
+
                                 </div>
                             </div>
                         </div>
@@ -159,6 +165,21 @@
                             <p class="text-gray-700">n8n accessible internally via <code
                                     class="bg-gray-200 px-1 rounded">http://192.168.0.101:5**8</code>.</p>
                         </div>
+                         <div class="border border-gray-200 p-6 rounded-lg bg-gray-50">
+                            <h3 class="text-xl font-bold mb-3">🐳 Docker (Compose for Services & Containerization)</h3>
+                            <p class="font-semibold mb-2">What was done:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+                                <li>Installed Docker to keep things tidy and easy to followup.</li>
+                                
+                                <li>Created a <code class="bg-gray-200 px-1 rounded">docker-compose.yml</code> file to
+                                    manage services.</li>
+                                <li>Configured services to use local volumes for data persistence.</li>
+                                <li>Ensured all services are networked together for easy communication.</li>
+                            </ul>
+                            <p class="font-semibold mb-2">Result:</p>
+                            <p class="text-gray-700">All services are containerized, making them easy to manage and
+                                update. This setup allows for quick scaling and isolation of services.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -194,6 +215,17 @@
                                 <li>Joined the device to a private Tailscale network.</li>
                                 <li>Used the Tailscale IP for secure SSH and direct service access.</li>
                             </ul>
+                            <p class="font-semibold mb-2">Result:</p>
+                            <p class="text-gray-700">Full, secure administrative access to the server from anywhere,
+                                without public exposure.</p>
+                        </div>
+                        <div class="border border-gray-200 p-6 rounded-lg bg-gray-50">
+                            <h3 class="text-xl font-bold mb-3">🔁 n8n Automation Tool</h3>
+                            <p class="font-semibold mb-2">What was done:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+                                <li>Configured n8n to run as a service using Docker.</li>
+                                <li>Set up workflows to automate tasks like media organization and notifications.</li>
+                                <li>Ensured n8n can access Jellyfin and other local services securely.</li>
                             <p class="font-semibold mb-2">Result:</p>
                             <p class="text-gray-700">Full, secure administrative access to the server from anywhere,
                                 without public exposure.</p>
@@ -247,15 +279,15 @@
                         <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <span class="font-semibold text-lg">Jellyfin Media Server</span>
                             <div class="flex items-center gap-2">
-                                <span class="h-3 w-3 bg-green-500 rounded-full"></span>
-                                <span class="font-medium text-green-700">Running on LAN</span>
+                                <span class="h-3 w-3 bg-yellow-500 rounded-full"></span>
+                                <span class="font-medium text-green-700">Paused</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <span class="font-semibold text-lg">n8n Automation</span>
                             <div class="flex items-center gap-2">
                                 <span class="h-3 w-3 bg-green-500 rounded-full"></span>
-                                <span class="font-medium text-green-700">Running on LAN</span>
+                                <span class="font-medium text-green-700">Running on LAN/Public Internet</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -268,8 +300,8 @@
                         <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <span class="font-semibold text-lg">Cloudflare Tunnel</span>
                             <div class="flex items-center gap-2">
-                                <span class="h-3 w-3 bg-yellow-500 rounded-full"></span>
-                                <span class="font-medium text-yellow-700">Paused for Refinement</span>
+                                <span class="h-3 w-3 bg-green-500 rounded-full"></span>
+                                <span class="font-medium text-green-700">Fully Operational</span>
                             </div>
                         </div>
                     </div>
